@@ -117,7 +117,7 @@ fi
 echo ".cfg" > ~/.gitignore
 git clone --bare git@github.com:Danielp93/dotfiles.git ~/.cfg &> /dev/null
 if [ $? -eq 0 ]; then
-  config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME" 
+  config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
   # Checkout config
   $config checkout &>/dev/null
   [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv {} /tmp/{}
