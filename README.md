@@ -8,5 +8,7 @@ This is a git-bare managed repository of my dotfiles. `bootstrap.sh` is included
 
 ## Usage
 ```Bash
-$ wget -qO - https://raw.githubusercontent.com/Danielp93/dotfiles/master/bootstrap.sh?token=ABNRJ4KBYZ3IAE6AEXQ6WNC6Z755M | . /dev/stdin 
+$ wget -qO bootstrap.sh https://raw.githubusercontent.com/Danielp93/dotfiles/master/bootstrap.sh?token=ABNRJ4KBYZ3IAE6AEXQ6WNC6Z755M
+$ chmod +x bootstrap.sh
+$ . ./bootstrap.sh
 ```
