@@ -48,13 +48,13 @@ echo -e "\r  [+] Installing dependencies... SUCCESS"
 ########################
 #Check if correct Bitwarden version is installed, if not, do so.
 echo -e "  [*] Configuring Bitwarden Installation."
-if [[ $(bw -v) != $BW_VERSION  ]]; then
-  echo -e -n "    [*] Bitwarden not found, installing..."
-  wget -q https://github.com/bitwarden/cli/releases/download/v$BW_VERSION/bw-linux-$BW_VERSION.zip -O /tmp/bw.zip \
-          && sudo unzip -jqqo /tmp/bw.zip -d /usr/local/bin/ \
-          && sudo chmod +x /usr/local/bin/bw
-  echo -e "\r    [+] Bitwarden not found, installing... SUCCESS"
-fi
+if [[ ! -x $(command -v bw) ]] || [[ $(bw -v) != $BW_VERSION ]]; then
+    echo -e -n "    [*] Bitwarden not found, installing..."
+    wget -q https://github.com/bitwarden/cli/releases/download/v$BW_VERSION/bw-linux-$BW_VERSION.zip -O /tmp/bw.zip \
+            && sudo unzip -jqqo /tmp/bw.zip -d /usr/local/bin/ \
+            && sudo chmod +x /usr/local/bin/bw
+    echo -e "\r    [+] Bitwarden not found, installing... SUCCESS"
+ fi
 #Get valid Bitwarden Session
 bw login --check || export BW_SESSION="$(bw login $BW_EMAIL --raw)"
 bw unlock --check || export BW_SESSION="$(bw unlock --raw)"
@@ -76,7 +76,7 @@ echo "  [*] Configuring SSH keys from Bitwarden."
 	  jq -cr '.[] | select(.attachments?) | [.id, (.attachments[] | select(.fileName | endswith(".pub") | not) | .id)] | join(" ")' |\
           awk '{system("bw get attachment "$2" \
           			--itemid "$1" \
-				--output ~/.ssh/" )}' &> /dev/null
+				--output ~/.ssh/" )}' &>/dev/null
   find ~/.ssh -type f -not \( -name "known_hosts" -o \
   			-name "authorized_key" -o \
 			-name "config" -o \
@@ -86,14 +86,14 @@ echo "  [*] Configuring SSH keys from Bitwarden."
   echo -e "\r    [+] Fetching Private keys from Bitwarden and Creating public keys... SUCCESS"
   
   ( [ -f ~/.ssh/config ] || touch ~/.ssh/config ) && chmod 0600 ~/.ssh/config
-  if grep -qFv "Host github.com" ~/.ssh/config; then
-    if [ -f ~/.ssh/Github-Personal ]; then
+  if ! grep -q "Host github.com" ~/.ssh/config; then
+    if [ -f ~/.ssh/GithubPersonal ]; then
       echo -n "    [*] Adding git user to ssh_config..."
         sudo tee -a ~/.ssh/config &>/dev/null <<-EOF
-
+	#Added by bootstrap.sh
 	Host github.com
-		User Git
-		IdentityFile ~/.ssh/Github-Personal
+	    User Git
+	    IdentityFile ~/.ssh/GithubPersonal
 	EOF
 
       echo -e "\r    [+] Adding git user to SSH config: SUCCESS"
@@ -120,7 +120,7 @@ if [ $? -eq 0 ]; then
   config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME" 
   # Checkout config
   $config checkout &>/dev/null
-  [ $? = 0 ] || config checkout 2>&1 | grep -E "\s+\." | awk {'print $1'} | xargs -I{} mv {} /tmp/{}
+  [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv {} /tmp/{}
   $config checkout
   $config config --local status.showUntrackedFiles no
   echo "alias config=$config" >> $HOME/.bashrc
