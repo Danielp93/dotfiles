@@ -32,3 +32,6 @@ $XDG_CONFIG_HOME || export XDG_CONFIG_HOME=$HOME/.config
 
 # ALIASSES
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Set correct dircolors
+eval `dircolors .dircolors.wsl`
