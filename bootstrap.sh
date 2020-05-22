@@ -114,8 +114,10 @@ if [  -d ~/.cfg ]; then
   mv -f ~/.cfg /tmp/.cfg-$(date +%m%d%Y)
 fi
 
-echo ".cfg" > ~/.gitignore
-git clone --bare git@github.com:Danielp93/dotfiles.git ~/.cfg &> /dev/null
+echo ".cfg" > $HOME/.gitignore
+echo "README.md" >> $HOME/.gitignore
+
+git clone --bare git@github.com:Danielp93/dotfiles.git $HOME/.cfg &> /dev/null
 if [ $? -eq 0 ]; then
   config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
   # Checkout config
