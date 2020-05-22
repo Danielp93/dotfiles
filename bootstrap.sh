@@ -123,7 +123,7 @@ if [ $? -eq 0 ]; then
   [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv {} /tmp/{}
   $config checkout
   $config config --local status.showUntrackedFiles no
-  echo "alias config=$config" >> $HOME/.bashrc
+  [[ -f $HOME/.profile ]] && source $HOME/.profile
   echo -e "\r    [+] Cloning .dotfiles Repo and Configuring 'config ...' alias... SUCCESS"
 else
   echo -e "\r    [-] Cloning .dotfiles Repo and Configuring 'config ...' alias... FAILED" 
