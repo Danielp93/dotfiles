@@ -204,11 +204,11 @@ echo "  [*] Downloading, building and installing ZSH, TMUX and NEOVIM."
       cd --
       
       NVIM_PATH=/usr/local/bin/nvim 
-      sudo update-alternatives  --quiet --install /usr/bin/ex ex $NVIM_PATH 110
-      sudo update-alternatives  --quiet --install /usr/bin/vi vi $NVIM_PATH 110
-      sudo update-alternatives  --quiet --install /usr/bin/view view $NVIM_PATH 110
-      sudo update-alternatives  --quiet --install /usr/bin/vim vim $NVIM_PATH 110
-      sudo update-alternatives  --quiet --install /usr/bin/vimdiff vimdiff $NVIM_PATH 110
+      sudo update-alternatives --quiet --install /usr/bin/ex ex $NVIM_PATH 110
+      sudo update-alternatives --quiet --install /usr/bin/vi vi $NVIM_PATH 110
+      sudo update-alternatives --quiet --install /usr/bin/view view $NVIM_PATH 110
+      sudo update-alternatives --quiet --install /usr/bin/vim vim $NVIM_PATH 110
+      sudo update-alternatives --quiet --install /usr/bin/vimdiff vimdiff $NVIM_PATH 110
 
     echo -e "\r      [+] Installing... SUCCESS" 
 echo "  [+] Done installing ZSH, TMUX and NVIM"
