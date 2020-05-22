@@ -28,7 +28,7 @@ fi
 
 # ENVIRONMENTAL VARIABLES
 ## Default config location (for XDG honoring binaries)
-$XDG_CONFIG_HOME || export XDG_CONFIG_HOME=$HOME/.config
+export XDG_CONFIG_HOME=$HOME/.config
 
 # ALIASSES
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
