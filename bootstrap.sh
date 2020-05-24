@@ -38,9 +38,9 @@ ZSH_VERSION="5.8"
 # Pre-script Update    #
 ########################
 echo -n "  [*] Installing dependencies..."
-sudo apt-get -qq update
-sudo apt-get -qq upgrade
-sudo apt-get -qq install "${DEPENDENCIES[@]}" 
+sudo apt-get -qq update &>/dev/null 
+sudo apt-get -qq upgrade &>/dev/null 
+sudo apt-get -qq install "${DEPENDENCIES[@]}" &>/dev/null 
 echo -e "\r  [+] Installing dependencies... SUCCESS"
 
 ########################
@@ -119,12 +119,12 @@ echo "README.md" >> $HOME/.gitignore
 
 git clone --bare git@github.com:Danielp93/dotfiles.git $HOME/.cfg &> /dev/null
 if [ $? -eq 0 ]; then
-  config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+  alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
   # Checkout config
-  $config checkout &>/dev/null
-  [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv {} /tmp/{}
-  $config checkout
-  $config config --local status.showUntrackedFiles no
+  config checkout &>/dev/null
+  [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv -f {} /tmp/{}.BACKUP
+  config checkout
+  config config --local status.showUntrackedFiles no
   [[ -f $HOME/.profile ]] && source $HOME/.profile
   echo -e "\r    [+] Cloning .dotfiles Repo and Configuring 'config ...' alias... SUCCESS"
 else
