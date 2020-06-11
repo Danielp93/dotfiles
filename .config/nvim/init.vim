@@ -26,3 +26,11 @@ call plug#end()
 set termguicolors
 let ayucolor="dark"
 colorscheme ayu
+
+
+"
+" Editor Settings
+"
+
+set relativenumber
+set hlsearch
