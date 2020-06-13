@@ -34,3 +34,5 @@ colorscheme ayu
 
 set relativenumber
 set hlsearch
+set textwidth=80
+set colorcolumn=80

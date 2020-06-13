@@ -120,7 +120,7 @@ echo "README.md" >> $HOME/.gitignore
 git clone --bare git@github.com:Danielp93/dotfiles.git $HOME/.cfg &> /dev/null
 if [ $? -eq 0 ]; then
   function config {
-    config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME' $@
+    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
   }
   # Checkout config
   config checkout &>/dev/null
