@@ -21,6 +21,7 @@ DEPENDENCIES=(
 	      gettext
 	      python3-dev
 	      python3-pip
+	      python3-venv
 	     )
 SRC_DIR="/usr/src"
 PROJECTMOUNT="/mnt/c/Users/danielp/Documents/projects"
