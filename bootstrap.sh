@@ -125,7 +125,7 @@ if [ $? -eq 0 ]; then
   }
   # Checkout config
   config checkout &>/dev/null
-  [ $? = 0 ] || config checkout 2>&1 | grep -E "^\s+." | awk {'print $1'} | xargs -I{} mv -f {} /tmp/{}.BACKUP
+  config checkout 2>&1 | grep -E "^\s+." | awk -F/ '{ system("echo "$0" | tr -d \" \" | xargs -I{} mv -f {} /tmp/{}.BACKUP") }'
   config checkout
   config config --local status.showUntrackedFiles no
   [[ -f $HOME/.profile ]] && source $HOME/.profile
