@@ -34,4 +34,6 @@ colorscheme ayu
 set relativenumber
 set hlsearch
 set textwidth=80
-set colorcolumn=80
+set colorcolumn=80   " indicate column
+set nowrap           " do not automatically wrap on load
+set formatoptions-=t " do not automatically wrap text when typing
