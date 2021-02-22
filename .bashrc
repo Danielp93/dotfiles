@@ -8,6 +8,17 @@ case $- in
       *) return;;
 esac
 
+# Check if running through SSH
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SSH_DETECTED=1
+# many other tests omitted
+else
+  case $(ps -o comm= -p $PPID) in
+    sshd|*/sshd) SSH_DETECTED=1;;
+  esac
+fi
+
+
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
@@ -70,6 +81,12 @@ if [ "$color_prompt" = yes ]; then
         info_color='\[\033[1;31m\]'
         prompt_symbol=
 	uid_symbol=
+    fi
+    
+    if [ "$SSH_DETECTED" = 1 ]; then # Change prompt colors for ssh user
+        prompt_color='\[\033[0m\]'
+        info_color='\[\033[;33m\]'
+	prompt_symbol=
     fi
     PS1=$prompt_color'┌──${debian_chroot:+($debian_chroot)──}${VIRTUAL_ENV:+(\[\033[0;1m\]$(basename $VIRTUAL_ENV)'$prompt_color')}('$info_color'\u${prompt_symbol}\h'$prompt_color')-[\[\033[0;1m\]\w'$prompt_color']\n'$prompt_color'└─'$info_color$uid_symbol'\[\033[0m\] '
 else
