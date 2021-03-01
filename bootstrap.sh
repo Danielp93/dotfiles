@@ -129,6 +129,7 @@ if [ $? -eq 0 ]; then
   config checkout
   config config --local status.showUntrackedFiles no
   [[ -f $HOME/.profile ]] && source $HOME/.profile
+  sudo cp $HOME/.bashrc /root/home/.bashrc
   echo -e "\r    [+] Cloning .dotfiles Repo and Configuring 'config ...' alias... SUCCESS"
 else
   echo -e "\r    [-] Cloning .dotfiles Repo and Configuring 'config ...' alias... FAILED" 
