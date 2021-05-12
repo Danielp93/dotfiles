@@ -37,10 +37,22 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 eval `dircolors $HOME/.dircolors.wsl`
 
 # Application Specific
-
+if [ -d "$HOME/go" ] ; then
+	GOPATH="$HOME/go"
+	GOROOT="/opt/go"
+	PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+	
+fi
 # NVM create initfunction, init is too slow for bash startup
 initnvm(){
-	export NVM_DIR="$HOME/.config/nvm"
-	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-	[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+}
+
+# Init Pyenv 
+initpyenv(){
+	export PATH="$HOME/.pyenv/bin:$PATH"
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
 }

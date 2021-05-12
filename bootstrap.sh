@@ -32,7 +32,7 @@ BW_EMAIL="Danielpot93@gmail.com"
 TMUX_VERSION="3.1b"
 NCURSES_VERSION="6.2"
 LIBEVENT_VERSION="2.1.11"
-NVIM_VERSION="stable"
+NVIM_VERSION="nightly"
 ZSH_VERSION="5.8"
 
 ########################
